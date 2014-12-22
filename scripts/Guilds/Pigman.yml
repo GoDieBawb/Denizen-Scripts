@@ -1,0 +1,154 @@
+Pigman:
+  Type: Assignment
+  Interact Scripts:
+  - 13 ^Rank0
+  - 12 ^Rank-1
+'Rank0':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - MONEY 50000
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Hey there faggot I can remove your rank for $50,0000. Are you interested?"
+        - ZAP
+      Proximity Trigger:
+        Script:
+        - CHAT "<&a>Hi there"
+    2:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>So... I remove your rank for $50,000 yes no or just shut the fuck up and walk away...."
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I want to lose my rank!
+          Script:
+           - CHAT "<&a>Great, There you go Bitch thanks for the money...."
+           - TAKE MONEY QTY:50000
+           - EXECUTE ASSERVER 'pex group Builder user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group Craftsman user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group Foreman user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group Pilot user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group Crewman user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group Captain user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group Magician user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group Wizard user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group Spellcaster user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group Bandit user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group Rogue user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group Thief user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group Priest user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group Bishop user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group Cardinal user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group Guard user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group Crusader user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group Veteran user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group fortifier user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group mechanic user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group designer user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group commander user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group gunner user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group bomber user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group summoner user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group brewer user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group enchanter user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group explosives user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group spy user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group assassin user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group voodoo user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group pacifist user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group patriarch user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group archer user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group swordsman user remove <player.name>'
+           - EXECUTE ASSERVER 'pex group tank user remove <player.name>'
+           - execute asserver 'pex user <player.name> remove Wizard'
+           - execute asserver 'pex user <player.name> remove Wizard1'
+           - execute asserver 'pex user <player.name> remove Wizard2'
+           - execute asserver 'pex user <player.name> remove Wizard3'
+           - execute asserver 'pex user <player.name> remove Wizard4'
+           - execute asserver 'pex user <player.name> remove Wizard5'
+           - execute asserver 'pex user <player.name> remove Wizard6'
+           - execute asserver 'pex user <player.name> remove Wizard7'
+           - execute asserver 'pex user <player.name> remove Wizard8'
+           - execute asserver 'pex user <player.name> remove Wizard9'
+           - execute asserver 'pex user <player.name> remove Grief'
+           - execute asserver 'pex user <player.name> remove Grief1'
+           - execute asserver 'pex user <player.name> remove Grief2'
+           - execute asserver 'pex user <player.name> remove Grief3'
+           - execute asserver 'pex user <player.name> remove Grief4'
+           - execute asserver 'pex user <player.name> remove Grief5'
+           - execute asserver 'pex user <player.name> remove Grief6'
+           - execute asserver 'pex user <player.name> remove Grief7'
+           - execute asserver 'pex user <player.name> remove Grief8'
+           - execute asserver 'pex user <player.name> remove Grief9'
+           - execute asserver 'pex user <player.name> remove Builder'
+           - execute asserver 'pex user <player.name> remove Builder1'
+           - execute asserver 'pex user <player.name> remove Builder2'
+           - execute asserver 'pex user <player.name> remove Builder3'
+           - execute asserver 'pex user <player.name> remove Builder4'
+           - execute asserver 'pex user <player.name> remove Builder5'
+           - execute asserver 'pex user <player.name> remove Builder6'
+           - execute asserver 'pex user <player.name> remove Builder7'
+           - execute asserver 'pex user <player.name> remove Builder8'
+           - execute asserver 'pex user <player.name> remove Builder9'
+           - execute asserver 'pex user <player.name> remove Priest'
+           - execute asserver 'pex user <player.name> remove Priest1'
+           - execute asserver 'pex user <player.name> remove Priest2'
+           - execute asserver 'pex user <player.name> remove Priest3'
+           - execute asserver 'pex user <player.name> remove Priest4'
+           - execute asserver 'pex user <player.name> remove Priest5'
+           - execute asserver 'pex user <player.name> remove Priest6'
+           - execute asserver 'pex user <player.name> remove Priest7'
+           - execute asserver 'pex user <player.name> remove Priest8'
+           - execute asserver 'pex user <player.name> remove Priest9'
+           - execute asserver 'pex user <player.name> remove fighter'
+           - execute asserver 'pex user <player.name> remove fighter1'
+           - execute asserver 'pex user <player.name> remove fighter2'
+           - execute asserver 'pex user <player.name> remove fighter3'
+           - execute asserver 'pex user <player.name> remove fighter4'
+           - execute asserver 'pex user <player.name> remove fighter5'
+           - execute asserver 'pex user <player.name> remove fighter6'
+           - execute asserver 'pex user <player.name> remove fighter7'
+           - execute asserver 'pex user <player.name> remove fighter8'
+           - execute asserver 'pex user <player.name> remove fighter9'
+           - execute asserver 'pex user <player.name> remove pilot'
+           - execute asserver 'pex user <player.name> remove pilot1'
+           - execute asserver 'pex user <player.name> remove pilot2'
+           - execute asserver 'pex user <player.name> remove pilot3'
+           - execute asserver 'pex user <player.name> remove pilot4'
+           - execute asserver 'pex user <player.name> remove pilot5'
+           - execute asserver 'pex user <player.name> remove pilot6'
+           - execute asserver 'pex user <player.name> remove pilot7'
+           - execute asserver 'pex user <player.name> remove pilot8'
+           - execute asserver 'pex user <player.name> remove pilot9'
+           - execute asserver 'pex user <player.name> remove Assassin1'
+           - execute asserver 'pex user <player.name> remove Assassin'
+           - execute asserver 'pex user <player.name> remove Special'
+           - execute asserver 'pex user <player.name> remove Explosives1'
+           - execute asserver 'pex user <player.name> remove Explosives'
+           - execute asserver 'pex user <player.name> remove Bandit2'
+           - execute asserver 'pex user <player.name> remove Bandit1'
+           - execute asserver 'pex user <player.name> remove Grief3'
+           - execute asserver 'pex user <player.name> remove Grief2'
+           - execute asserver 'pex user <player.name> remove Grief'
+           - execute asserver 'pex user <player.name> remove Pilot3'
+           - execute asserver 'pex user <player.name> remove Pilot2'
+           - execute asserver 'pex user <player.name> remove Pilot'
+           - ZAP 1
+        2:
+          Trigger: /No/ I like being my class
+          Script:
+           - CHAT "<&a>Alright fine... Go Away."
+           - ZAP 1
+'Rank-1':
+  Type: Interact
+  Requirements:
+    Mode: None
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Bitch you ain't got the money..."

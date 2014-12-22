@@ -1,0 +1,215 @@
+'PirateTimer':
+  type: world     
+  events:
+    On 5:00 in world:
+      - run as:n@170 script:SwampyDay delay:1
+      - run as:n@169 script:PegDay delay:1
+      - run as:n@163 script:PinkDay delay:1
+      - run as:n@164 script:EnglishDay delay:1
+      - run as:n@165 script:ColinDay delay:1
+      - run as:n@160 script:TheTrollDay delay:1
+      - run as:n@150 script:TesticleDay delay:1
+      - run as:n@156 script:MannDay delay:1
+      - run as:n@168 script:BouncerDay delay:1
+      - run as:n@158 script:PenisDay delay:1
+      - run as:n@167 script:DJDay delay:1
+    On 20:00 in world:
+      - run as:n@170 script:SwampyNight delay:1
+      - run as:n@169 script:PegNight delay:1
+      - run as:n@163 script:PinkNight delay:1
+      - run as:n@164 script:EnglishNight delay:1
+      - run as:n@165 script:ColinNight delay:1
+      - run as:n@160 script:TheTrollNight delay:1
+      - run as:n@150 script:TesticleNight delay:1
+      - run as:n@156 script:MannNight delay:1
+      - run as:n@168 script:BouncerNight delay:1
+      - run as:n@158 script:PenisNight delay:1
+      - run as:n@167 script:DJNight delay:1
+
+'SwampyDay':
+  Type: Task
+  Script:
+    - walkto location:<Server.Flag[swampyspot]>
+
+'SwampyNight':
+  Type: Task
+  Script:
+  - walkto location:<Server.Flag[SkyDeck1]>
+  - run script:PirateBangLoop delay:15s
+
+'PegDay':
+  Type: Task
+  Script:
+    - walkto location:<Server.Flag[PegSpot]>
+
+'PegNight':
+  Type: Task
+  Script:
+    - walkto location:<Server.Flag[SkyDeck2]>
+    - run script:PirateBanged delay:15s
+
+'PinkDay':
+  Type: Task
+  Script:
+    - walkto location:<Server.Flag[PinkSpot]>
+
+'PinkNight':
+  Type: Task
+  Script:
+    - walkto location:<Server.Flag[DanceFloor1]>
+    - run script:PirateDanceLoop delay:5s
+
+'EnglishDay':
+  Type: Task
+  Script:
+    - walkto location:<Server.Flag[EnglishSpot]>
+
+'EnglishNight':
+  Type: Task
+  Script:
+    - walkto location:<Server.Flag[DanceFloor2]>
+    - run script:PirateDanceLoop delay:10s
+
+'ColinDay':
+  Type: Task
+  Script:
+    - walkto location:<Server.Flag[ColinSpot]>
+
+'ColinNight':
+  Type: Task
+  Script:
+    - walkto location:<Server.Flag[DanceFloor3]>
+    - run script:PirateDanceLoop delay:1s
+
+'TheTrollDay':
+  Type: Task
+  Script:
+    - walkto location:<Server.Flag[TheTrollSpot]>
+    - queue cancel id:Bar
+
+'TheTrollNight':
+  Type: Task
+  Script:
+    - walkto location:<Server.Flag[BarSpot1]>
+    - run script:PirateBarLoop delay:1s
+
+'TesticleDay':
+  Type: Task
+  Script:
+    - walkto location:<Server.Flag[TesticleSpot]>
+
+'TesticleNight':
+  Type:
+  Script:
+    - walkto location:<Server.Flag[BarSpot2]>
+    - run script:PirateBarLoop delay:1s
+
+'MannDay':
+  Type: Task
+  Script:
+    - walkto location:<Server.Flag[MannSpot]>
+
+'MannNight':
+  Type: Task
+  Script:
+    - walkto location:<Server.Flag[BarSpot3]>
+    - run script:PirateBarLoop delay:1s
+
+'BouncerDay':
+  Type: Task
+  Script:
+    - walkto location:<Server.Flag[BouncerSpot]>
+
+'BouncerNight':
+  Type: Task
+  Script: 
+    - walkto location:<Server.Flag[BouncerPost]>
+
+'DjDay':
+  Type: Task
+  Script:
+    - walkto location:<Server.Flag[DJBed]>
+    - wait 30
+    - animate entity:<npc> animation:sleep
+
+'DjNight':
+  Type: Task
+  Script:
+    - animate entity:<npc> animation:stop_sleeping
+    - walkto location:<Server.Flag[DJBooth]>
+    - run script:PirateBangLoop delay:15s
+
+'PenisDay':
+  Type: Task
+  Script:
+    - walkto location:<Server.Flag[PenisBed]>
+    - wait 30
+    - animate entity:<npc> animation:sleep
+
+'PenisNight':
+  Type: Task
+  Script:
+    - animate entity:<npc> animation:stop_sleeping
+    - walkto location:<Server.Flag[BarSpot]>
+
+'PirateDanceLoop':
+  Type: Task
+  Script:
+    - animate entities:<npc> animation:sneak
+    - look entity:<npc> location:<Server.Flag[DanceFloor1]>
+    - animate entities:<npc> animation:stop_sneaking
+    - animate entities:<npc> animation:sneak
+    - look entity:<npc> location:<Server.Flag[DanceFloor2]>
+    - animate entities:<npc> animation:stop_sneaking
+    - animate entities:<npc> animation:sneak
+    - look entity:<npc> location:<Server.Flag[DanceFloor3]>
+    - animate entities:<npc> animation:stop_sneaking
+    - animate entities:<npc> animation:sneak
+    - look entity:<npc> location:<Server.Flag[DanceFloor1]>
+    - animate entities:<npc> animation:stop_sneaking
+    - look entity:<npc> location:<Server.Flag[DanceFloor2]>
+    - animate entities:<npc> animation:sit
+    - look entity:<npc> location:<Server.Flag[DanceFloor3]>
+    - animate entities:<npc> animation:stop_sitting
+    - wait 2
+    - animate entities:<npc> animation:sit
+    - animate entities:<npc> animation:stop_sitting
+    - wait 2
+    - if <npc.location.world.time.period> == night {
+      - run script:PirateDanceLoop delay:10s
+      }
+      } else {
+      }
+'PirateBarLoop':
+  Type: Task
+  Script:
+    - equip hand:373:16453
+    - playsound sound:Drink location:<npc.location> volume:2
+    - playsound sound:Burp location:<npc.location> volume:2
+    - equip hand:!
+    - wait 30
+    - if <npc.location.world.time.period> == night {
+      - run script:PirateBarLoop delay:5s
+      } else {
+      }
+'PirateBangLoop':
+  Type: Task
+  Script:
+    - animate entities:<npc> animation:sneak
+    - animate entities:<npc> animation:stop_sneaking
+    - if <npc.location.world.time.period> == night {
+      - run script:PirateBangLoop
+      } else {
+      }
+'PirateBanged':
+  Type: Task
+  Script:
+    - if <npc.location.world.time.period> == night {
+      - look entities:<npc> location:<server.flag[SkyDeck1]>
+      - animate entities:<npc> animation:sleep
+      - animate entities:<npc> animation:sit
+      - run script:PirateBanged delay:60s
+      } else {
+      - animate entities:<npc> animation:stop_sleeping
+      - animate entities:<npc> animation:stop_sitting
+      }

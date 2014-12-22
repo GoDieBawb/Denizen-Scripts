@@ -1,0 +1,10 @@
+Bows:
+  Type: World
+  Events:
+    On Player Shoots Bow:
+      - if <context.entity.item_in_hand.lore> == li@firework {
+        - determine firework
+
+        } else if <context.entity.item_in_hand.lore> == li@pig {
+        - determine pig
+        }

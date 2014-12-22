@@ -1,0 +1,145 @@
+Feloran:
+  Type: Assignment
+  Interact Scripts:
+  - 3 EnchanterQuest
+  - 1 FeloranStart
+
+FeloranStart:
+  Type: Interact
+  Requirements:
+    Mode: None
+    List:
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - if <player.flag[spellCastCount]> == null {
+          - flag spellCastCount:0
+          }
+
+        - if <player.group[SpellCaster]> {
+          - chat "You must be a donor to rank up further"
+
+          } else if <player.flag[inGuild]> != null {
+          - chat "We're not interested in someone in a guild already."
+
+          } else if <player.flag[MageDuring]> && <player.flag[spellCastCount]> > 99 {
+          - chat "Congratulations <player.name> Youve casted <player.flag[spellCount]> Spells!"
+          - flag MageDuring:!
+          - run script:FeloranFinish
+
+          } else if <player.flag[MageDuring]> {
+          - chat "You've only casted <player.flag[spellCastCount]> spells. That's not enough, keep on going!"
+
+          } else if <player.flag[MageAccept]> {
+          - chat "Okay, if you're a true Mage, you'd have no problem casting some spells. Once you've casted 100 spells, I'll call you a Mage."
+          - flag MageAccept:!
+          - flag MageDuring
+
+          } else if <player.flag[MageAsk]> {
+          - chat "So what will it be player? Yes or No"
+
+          } else {
+          - chat "Hello there! I'm looking for people who want to become Mages"
+          - flag MageAsk duration:15s
+          }
+
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I'd love to be a mage.
+          Script:
+           - CHAT "<&a>Good!"
+           - flag Mageaccept
+        2:
+          Trigger: /No/ Im not interested.
+          Script:
+           - CHAT "<&a>Alright thats fine..."
+
+FeloranFinish:
+  Type: Task
+  Script:
+    - execute as_server "pex group magician user add <player.name>"
+    - flag inGuild:mage
+
+EnchanterQuest:
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - inGroup Donor
+    - inGroup SpellCaster
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - if <player.group[Brewmaster]> OR <player.group[Summoner]> OR <player.group[Enchanter]> {
+          - chat "<&e><&l>Congratulations"
+
+          } else if <player.flag[EnchanterDuring]> {
+          - run script:EnchanterCheck instantly
+
+          } else if <player.group[SpellCaster]> {
+          - chat "<&e><&l>Hello there SpellCaster are you interested in advancing in the Enchanter's Guild?"
+
+          } else {
+          - chat "<&e><&l>I'm confused"
+          }
+
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I'd love to be a Enchanter.
+          Script:
+            - if <player.flag[inGuild]> == Mage && <player.group[SpellCaster]> {
+              - CHAT "<&a>Good!"
+
+              - if <player.mcmmo.level[Taming]> > 199 && <player.mcmmo.level[Archery]> > 249 {
+                - flag EnchanterDuring
+
+                } else {
+                - chat "<&e><&l>Sorry you'll need to train your levels higher."
+                - narrate "<&1><&l>Required Taming<&co> <&e><&l>200"
+                - narrate "<&1><&l>Required Archery<&co> <&e><&l>250"
+                - narrate "<&4><&l>Current Taming<&co> <&e><&l><player.mcmmo.level[Taming]>"
+                - narrate "<&4><&l>Current Archery<&co> <&e><&l><player.mcmmo.level[Archery]>"
+                }
+
+              } else {
+              - chat "yes what?"
+              }
+
+        2:
+          Trigger: /No/ Im not interested.
+          Script:
+           - CHAT "<&a>Alright thats fine..."
+
+EnchanterCheck:
+  Type: Task
+  Script:
+    - if <player.flag[spellCastCount]> == null {
+      - flag spellCastCount:0
+      }
+
+    - if <player.flag[enchantCount]> == null {
+      - flag enchantCount:0
+      }
+
+    - if <player.flag[brewCount]> == null {
+      - flag brewCount:0
+      }
+
+    - if <player.flag[enchantCount]> > 499 && <player.flag[spellCastCount]> > 499 && <player.flag[brewCount]> > 99 {
+      - define EnchanterStats true
+      }
+
+    - if %EnchanterStats% == true {
+      - chat "You can be a Enchanter"
+      - flag EnchanterDuring:!
+      - execute as_server "pex group Enchanter user add <player.name>"
+      - execute as_server "pex group SpellCaster user add <player.name>"
+
+      } else {
+      - chat "<&e><&l>I'm sorry but you must have casted at least <&1><&l>500 Spells <&e><&l>Brewed 100 Times <&e><&l>and <&1><&l>enchanted 500 items"
+      - narrate "<&4><&l>Current Spellcast Count:<&e><&l><player.flag[spellCastCount]>"
+      - narrate "<&4><&l>Current Enchant Count:<&e><&l><player.flag[enchantCount]>"
+      - narrate "<&4><&l>Current Brew Count:<&e><&l><player.flag[brewCount]>"
+      }

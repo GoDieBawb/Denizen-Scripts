@@ -1,0 +1,157 @@
+Gilmear:
+  Type: Assignment
+  Interact Scripts:
+  - 1 FighterStart
+
+FighterStart:
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - if <player.group[Veteran]> {
+          - chat "You must be a donor to rank up further in the Guild"
+
+
+          } else if <player.flag[inGuild]> != null {
+          - if <player.flag[inguild]> == fighter {
+            - chat "Hope you are enjoying the guild!"
+
+            } else {
+            - chat "We're not interested in someone in a guild already."
+            }
+
+          } else if <player.flag[fighterDuring]> && <player.item_in_hand.skin> == "PeePeeBandit" && <player.item_in_hand.qty> > 4 {
+          - take iteminhand qty:5
+          - chat "Congratulations <player.name>! You've proved yourself!"
+          - flag fighterDuring:!
+          - run script:GilmearFinish
+
+          } else if <player.flag[fighterDuring]> {
+          - chat "Don't stop killing those PeePeeBandits until you bring me 5 of their heads."
+
+          } else if <player.flag[fighterAccept]> {
+          - chat "Alright! What I need you to do is go to the bandit fort nearby and help with the effort."
+          - flag fighterAccept:!
+          - flag fighterDuring
+
+          } else if <player.flag[fighterAsk]> {
+          - chat "So what will it be player? Yes or No"
+
+          } else {
+          - chat "Hello there! I'm looking for adventurers who enjoy fighting"
+          - flag fighterAsk duration:15s
+          }
+
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I'd love to be a fighter.
+          Script:
+          - if <player.flag[inGuild]> == null {
+            - CHAT "<&a>Good!"
+            - flag fighteraccept
+
+            } else {
+            - chat "Yes what?"
+            }
+        2:
+          Trigger: /No/ Im not interested.
+          Script:
+           - CHAT "<&a>Alright thats fine..."
+
+GilmearFinish:
+  Type: Task
+  Script:
+    - execute as_server "pex group guard user add <player.name>"
+    - flag inGuild:fighter
+
+TankQuest:
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - inGroup Veteran
+    - inGroup Donor
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - if <player.group[Tank]> {
+          - chat "<&e><&l>Hello Tank"
+
+          } else if <player.flag[TankDuring]> {
+          - run script:TankCheck instantly
+
+          } else if <player.group[Veteran]> {
+          - chat "<&e><&l>Hello there Veteran are you interested in advancing in the Fighter's Guild?"
+
+          } else {
+          - chat "<&e><&l>I'm confused"
+          }
+
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I'd love to be a Tank.
+          Script:
+            - if <player.flag[inGuild]> == Fighter && <player.group[Veteran]> {
+              - CHAT "<&a>Good!"
+
+              - if <player.mcmmo.level[Swords]> > 449 && <player.mcmmo.level[Axes]> > 449 {
+                - flag TankDuring
+
+                } else {
+                - chat "<&e><&l>Sorry you'll need to train your levels higher."
+                - narrate "<&1><&l>Required Swords<&co> <&e><&l>450"
+                - narrate "<&1><&l>Required Axes<&co> <&e><&l>450"
+                - narrate "<&4><&l>Current Swords<&co> <&e><&l><player.mcmmo.level[Swords]>"
+                - narrate "<&4><&l>Current Axes<&co> <&e><&l><player.mcmmo.level[Axes]>"
+                }
+
+              } else {
+              - chat "yes what?"
+              }
+
+        2:
+          Trigger: /No/ Im not interested.
+          Script:
+           - CHAT "<&a>Alright thats fine..."
+
+TankCheck:
+  Type: Task
+  Script:
+    - if <player.flag[BanditKillCount]> == null {
+      - flag BanditKillCount:0
+      }
+
+    - if <player.flag[DemonyteKillCount]> == null {
+      - flag DemonyteKillCount:0
+      }
+
+    - if <player.flag[GuardianKillCount]> == null {
+      - flag GuardianKillCount:0
+      }
+
+    - if <player.flag[DamageTaken]> == null {
+      - flag DamageTaken:0
+      }
+
+    - if <player.flag[DemonyteKillCount]> > 149 && <player.flag[BanditKillCount]> > 199 && <player.flag[Damagetaken]> > 4999 {
+      - define TankStats true
+      }
+
+    - if %TankStats% == true {
+      - chat "You can be a Tank"
+      - execute as_server "pex group Veteran user remove <player.name>"
+      - execute as_server "pex group Tank user add <player.name>"
+      - ex flag TankDuring:!
+
+      } else {
+      - chat "<&e><&l>I'm sorry but you still need need to have killed at least <&1><&l>150 Demonytes <&e><&l>killed <&1><&l>200 PeePeeBandits <&e><&l>and taken 5000 Damage"
+      - narrate "<&4><&l>Current Bandit Kills:<&e><&l><player.flag[BanditKillCount]>"
+      - narrate "<&4><&l>Current Demonyte Kills:<&e><&l><player.flag[DemonyteKillCount]>"
+      - narrate "<&4><&l>Current Soul Guardian Kills:<&e><&l><player.flag[GuardianKillCount]>"
+      - narrate "<&4><&l>Current Damage Taken Kills:<&e><&l><player.flag[Damagetaken]>"
+      }

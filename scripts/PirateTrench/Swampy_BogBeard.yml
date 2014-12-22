@@ -1,0 +1,56 @@
+'Swampy_BogBeard':
+  Type: Assignment
+  Scripts:
+  - 1 SwampyDuring
+
+'SwampyDuring':
+  Type: Interact
+  Requirement:
+    Mode: None
+    List:
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - if <npc.world.time.period> == day {
+          - chat "I don't know you."
+
+          } else if <npc.world.time.period> == day && <player.flag[RecipeFind]> {
+          - chat "Arggh Matey ye should be findin the recipe for PiratePink!"
+
+          } else if <npc.world.time.period> == day && <player.flag[RecipeHas]> && <player.item_in_hand.lore> == li@Recipe {
+          - chat "Give that to PiratePink"
+
+          } else if } else if <npc.world.time.period> == day && <player.flag[RecipeHas]> {
+          - chat "Give the recipe to Pirate Pink."
+
+          } else if <npc.world.time.period> == day && <player.flag[NikePieces]> && <player.item_in_hand.lore> == li@Pirate {
+          - chat "Give that to PiratePink"
+
+          } else if <npc.world.time.period> == day && <player.flag[GetGold]> {
+          - chat "We need a particular type of Gold... Pirate Gold! Now if we only knew a Pirate... With Some Gold."
+          
+
+          } else if <npc.world.time.period> == day && <player.flag[NikePieces]> {
+          - chat "So you tryin to get some nikes, and PiratePink Sent you here for some color? Well every Pirate Knows gold is in!"
+          - flag GetGold
+
+          } else if <npc.world.time.period> == day && <player.flag[NikePieces]> && <player.item_in_hand.lore> == li@Laces {
+          - chat "Give those to PiratePink."
+
+          } else if <npc.world.time.period> == day && <player.flag[NikePieces]> && <player.item_in_hand.lore> == li@PirateGold {
+          - chat "Give that to PiratePink."
+
+          } else if <npc.world.time.period> == day && <player.flag[Laces]> && <player.flag[PirateGold]> && <player.fag[PirateBoots]> {
+          - chat "Go See PiratePink!"
+
+          } else if <npc.world.time.period> == Dusk {
+          - chat "I'm on my way to da club."
+
+          } else if <npc.world.time.period> == Night && <player.equipment.boots.lore> li@Nikes {
+          - chat "Good to See you here"
+
+          } else if <npc.world.time.period> == Night {
+          - chat "Ewww how did you get in here with those nasty shoes."
+          } else  {
+          }

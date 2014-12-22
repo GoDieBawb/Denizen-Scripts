@@ -1,0 +1,114 @@
+Tytanekk:
+  Type: Assignment
+  Interact Scripts:
+  - 13 ^FighterDex4
+  - 12 ^FighterDex3
+  - 11 ^FighterDex2
+  - 10 ^FighterDex
+  - 14 ^FighterDex5
+'FighterDex':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Guard
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Hey there Guard! Looking to rank up in the guild?"
+        - ZAP
+      Proximity Trigger:
+        Script:
+        - CHAT "<&a>Hi there"
+    2:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>So... are you looking for advancement? yes or no?"
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I wanna help out!
+          Script:
+           - CHAT "<&a>Great, So you ready to hear your task?"
+           - ZAP 3
+        2:
+          Trigger: /No/ I like being a Guard
+          Script:
+           - CHAT "<&a>Alright fine... I guess you're not what were looking for."
+           - ZAP 1
+    3:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>So are you ready to hear your task? Yes or No?"
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I want to be a rank up.
+          Script:
+           - CHAT "<&a>Great! What I need from you is 30 Gold Axes.... We've been running low on supplies with this constant war going!"
+           - permission add Fighter4
+        2:
+          Trigger: /No/ maybe later.
+          Script:
+           - CHAT Alright fine... I guess you're not what were looking for.
+           - ZAP 1
+    4:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Hey <player.name>! How's Fighting?"
+'FighterDex4':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - PERMISSION Fighter4
+    - ITEM 286 qty:30
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Thank you! Congratulations you are now a Crusader in the Fighter's guild."
+        - permission add Fighter6
+        - permission remove Fighter2
+        - TAKE 286 QTY:30
+        - EXECUTE ASSERVER 'pex group Builder user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Craftsman user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Foreman user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Pilot user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Crewman user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Captain user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Magician user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Wizard user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Spellcaster user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Bandit user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Rogue user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Thief user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Priest user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Bishop user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Cardinal user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Guard user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Crusader user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Veteran user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Crusader user add <player.name>'
+        - EXECUTE ASSERVER 'pex group Guard user remove <player.name>'
+'FighterDex3':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - PERMISSION Fighter4
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>30 Gold Axes <player.name>... Bring that and you're in."
+'FighterDex5':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - PERMISSION Fighter6
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>You must donate to rank up further."

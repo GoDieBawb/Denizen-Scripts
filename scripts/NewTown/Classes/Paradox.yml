@@ -1,0 +1,152 @@
+Paradox:
+  Type: Assignment
+  Interact Scripts:
+  - 2 ExplosivesQuest
+  - 1 ParadoxStart
+
+ParadoxStart:
+  Type: Interact
+  Requirements:
+    Mode: None
+    List:
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+
+        - if <player.flag[tntCount]> == null {
+          - flag tntCount:0
+          }
+
+        - if <player.group[Thief]> {
+          - chat "You must be a donor to rank up further"
+
+          } else if <player.flag[inGuild]> != null {
+
+          - if <player.flag[inguild]> == griefer {
+            - chat "Hope you are enjoying the guild!"
+
+            } else {
+            - chat "We're not interested in someone in a guild already."
+            }
+
+          } else if <player.flag[grieferDuring]> && <player.flag[tntCount]> > 99 {
+          - chat "Congratulations <player.name> Ive heard you lit <player.flag[tntCount]> blocks of tnt!"
+          - flag grieferDuring:!
+          - run script:ParadoxFinish
+
+          } else if <player.flag[grieferDuring]> {
+          - chat "You've only lit <player.flag[tntCount]> tnt. That's not enough, keep griefing!"
+
+          } else if <player.flag[grieferAccept]> {
+          - chat "Okay, if you're a true griefer, you'd have no problem lighting some tnt. Once you've ignited 100 tnt, I'll call you a griefer."
+          - flag grieferAccept:!
+          - flag grieferDuring
+
+          } else if <player.flag[grieferAsk]> {
+          - chat "So what will it be <player.name>? Yes or No"
+
+          } else {
+          - chat "Hello there! I'm looking for people who want to become griefers"
+          - flag grieferAsk duration:15
+          }
+
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I'd love to be a griefer.
+          Script:
+           - CHAT "<&a>Good!"
+           - flag grieferAccept
+        2:
+          Trigger: /No/ Im not interested.
+          Script:
+           - CHAT "<&a>Alright thats fine..."
+
+ParadoxFinish:
+  Type: Task
+  Script:
+    - execute as_server "pex group bandit user add <player.name>"
+    - flag inGuild:griefer
+
+ExplosivesQuest:
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Donor
+    - inGroup Thief
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - if <player.group[Assassin]> OR <player.group[Spy]> && <player.group[Explosives]> {
+          - chat "<&e><&l>Greetings Guildmaster"
+
+          } else if <player.flag[ExplosivesDuring]> {
+          - run script:ExplosivesCheck instantly
+
+          } else if <player.group[thief]> {
+          - chat "<&e><&l>Hello there thief are you interested in advancing in the Griefer's Guild?"
+
+          } else {
+          - chat "<&e><&l>I'm confused"
+          }
+
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I'd love to be a Explosives.
+          Script:
+            - if <player.flag[inGuild]> == Griefer && <player.group[thief]> {
+              - CHAT "<&a>Good!"
+
+              - if <player.mcmmo.level[Unarmed]> > 299 && <player.mcmmo.level[Repair]> > 199 {
+                - flag ExplosivesDuring
+
+                } else {
+                - chat "<&e><&l>Sorry you'll need to train your levels higher."
+                - narrate "<&1><&l>Required Unarmed<&co> <&e><&l>300"
+                - narrate "<&1><&l>Required Repair<&co> <&e><&l>200"
+                - narrate "<&4><&l>Current Unarmed<&co> <&e><&l><player.mcmmo.level[Unarmed]>"
+                - narrate "<&4><&l>Current Repair<&co> <&e><&l><player.mcmmo.level[Repair]>"
+                }
+
+              } else {
+              - chat "yes what?"
+              }
+
+        2:
+          Trigger: /No/ Im not interested.
+          Script:
+           - CHAT "<&a>Alright thats fine..."
+
+ExplosivesCheck:
+  Type: Task
+  Script:
+    - if <player.flag[TnTCount]> == null {
+      - flag TnTCount:0
+      }
+
+    - if <player.flag[creeperCount]> == null {
+      - flag creeperCount:0
+      }
+
+    - if <player.flag[ghastCount]> == null {
+      - flag ghastCount:0
+      }
+
+    - if <player.flag[TnTCount]> > 1999 && <player.flag[creeperCount]> > 99 && <player.flag[enchantCount]> > 99 {
+      - define ExplosivesStats true
+      }
+
+    - if %ExplosivesStats% == true {
+      - chat "You can be an Explosives"
+      - flag ExplosivesDuring:!
+      - execute as_server "pex group Explosives user add <player.name>"
+      - execute as_server "pex group thief user remove <player.name>"
+
+      } else {
+      - chat "<&e><&l>I'm sorry but you must have lit at least <&1><&l>3000 TnT <&e><&l>and used <&1><&l>300 creeper eggs <&e><&l>and used <&1><&l>100 ghast eggs"
+      - narrate "<&4><&l>Current Creeper Count:<&e><&l><player.flag[creeperCount]>"
+      - narrate "<&4><&l>Current Tnt Count:<&e><&l><player.flag[TnTCount]>"
+      - narrate "<&4><&l>Current Ghast Count:<&e><&l><player.flag[ghastCount]>"
+      }

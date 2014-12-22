@@ -1,0 +1,218 @@
+Perryy:
+  Type: Assignment
+  Interact Scripts:
+  - 13 ^perry4
+  - 12 ^perry3
+  - 11 ^perry2
+  - 10 ^perry
+  - 14 ^perry5
+  - 15 Donate
+  - 15 ^Piloted
+  - 16 ^GunStart
+  - 17 ^GunTask
+  - 18 ^GunTaskNo
+  - 19 ^GunTaskYes
+  - 20 ^GuildComp
+'Perry':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Crewman
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Hey there Crewman! Looking to rank up in the guild?"
+        - ZAP
+      Proximity Trigger:
+        Script:
+        - CHAT "<&a>Hi there"
+    2:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>So... are you looking for advancement? yes or no?"
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I wanna help out!
+          Script:
+           - CHAT "<&a>Great, So you ready to hear your task?"
+           - ZAP 3
+        2:
+          Trigger: /No/ I like being a Crewman
+          Script:
+           - CHAT "<&a>Alright fine... I guess you're not what were looking for."
+           - ZAP 1
+    3:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>So are you ready to hear your task? Yes or No?"
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I want to be a rank up.
+          Script:
+           - CHAT "<&a>Great! What I need from you is 32 Iron Blocks.... We need more power for our cannons!"
+           - execute as_server 'pex user <player.name> add Crewman1'
+        2:
+          Trigger: /No/ maybe later.
+          Script:
+           - CHAT Alright fine... I guess you're not what were looking for.
+           - ZAP 1
+    4:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Hey <player.name>! How's Flying?"
+'Perry4':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Crewman
+    - PERMISSION Crewman1
+    - ITEM 42 QTY:32
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>That's it! Here's your rank you earned it... Pilot."
+        - execute as_server 'pex user <player.name> add Crewman2'
+        - execute as_server 'pex user <player.name> remove Crewman1'
+        - TAKE 42 QTY:32
+        - EXECUTE ASSERVER 'pex group Builder user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Craftsman user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Foreman user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Pilot user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Crewman user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Captain user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Magician user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Wizard user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Spellcaster user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Bandit user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Rogue user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Thief user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Priest user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Bishop user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Cardinal user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Guard user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Crusader user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Veteran user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Pilot user add <player.name>'
+        - EXECUTE ASSERVER 'pex group Crewman user remove <player.name>'
+'Perry3':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Crewman
+    - PERMISSION Crewman1
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>32 iron blocks dumbass <player.name>... Where are they?"
+'Perry5':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Pilot
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Hi there Talk to James to Rank up... He's somewhere around here...."
+'GunStart':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Captain
+    - PERMISSION Special
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>So you're ready to specialize! I handle the Gunner Specialty. Do you want to become a Gunner?"
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I want to be a Gunner.
+          Script:
+           - CHAT "<&a>Are you sure you don't want to talk to the others first?"
+           - ZAP
+        2:
+          Trigger: /No/ I like being a Captain.
+          Script:
+          - CHAT "<&a>I guess you're not what were looking for.
+    2:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>So are you sure? Yes or No?"
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I'm sure.
+          Script:
+           - CHAT "<&a>Great, But first a task!"
+           - execute as_server 'pex user <player.name> remove Special'
+           - execute as_server 'pex user <player.name> add Gunner'
+        2:
+          Trigger: /No/ I want to be something else.
+          Script:
+          - CHAT "<&a>Try talking to the others.
+          - ZAP 1
+'GunTask':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Captain
+    - PERMISSION Gunner
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>You're task is simple, Bring me 10 DiamodBlocks 64 TnT and 10 IronBlocks. And you will be a Gunner of the Guild."
+        - execute as_server 'pex user <player.name> remove Gunner'
+        - execute as_server 'pex user <player.name> add Gun1'
+'GunTaskNo':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Captain
+    - PERMISSION Gun1
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Where are my 10 DiamodBlocks 64 TnT and 10 IronBlocks <player.name>?"
+'GunTaskYes':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Captain
+    - PERMISSION Gun1
+    - ITEM 46 QTY:64
+    - ITEM 57 QTY:10
+    - ITEM 42 QTY:10
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>You've done it! Here is your rank Gunner!"
+        - TAKE 46 QTY:64
+        - TAKE 57 QTY:10
+        - TAKE 42 QTY:10
+        - EXECUTE ASSERVER 'pex group Gunner user add <player.name>'
+        - EXECUTE ASSERVER 'pex group Captain user remove <player.name>'
+'Donate':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Captain
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "You must donate to rank up further in the guild."

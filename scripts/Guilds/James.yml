@@ -1,0 +1,176 @@
+Jamess:
+  Type: Assignment
+  Interact Scripts:
+  - 13 ^James4
+  - 12 ^James3
+  - 11 ^James2    
+  - 10 ^James
+  - 14 ^James5
+  - 15 Donate
+  - 15 ^Piloted
+  - 16 ^ComStart
+  - 17 ^ComTask
+  - 18 ^ComTaskNo
+  - 19 ^ComTaskYes
+  - 20 ^GuildComp
+'James':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Pilot
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Hey there Pilot! Looking to rank up in the guild?"
+        - ZAP
+      Proximity Trigger:
+        Script:
+        - CHAT "<&a>Hi there"
+    2:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>So... are you looking for advancement? yes or no?"
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I wanna help out!
+          Script:
+           - CHAT "<&a>Great, So you ready to hear your task?"
+           - ZAP 3
+        2:
+          Trigger: /No/ I like being a Pilot
+          Script:
+           - CHAT "<&a>Alright fine... I guess you're not what were looking for."
+           - ZAP 1
+    3:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>So are you ready to hear your task? Yes or No?"
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I want to be a rank up.
+          Script:
+           - CHAT "<&a>Great! What I need from you is 16 Diamonds Blocks.... We need more power for our cannons!"
+           - execute as_server 'pex user <player.name> add Pilot4'
+        2:
+          Trigger: /No/ maybe later.
+          Script:
+           - CHAT Alright fine... I guess you're not what were looking for.
+           - ZAP 1
+    4:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Hey <player.name>! How's Flying?"
+'James4':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - PERMISSION Pilot4
+    - ITEM 57 QTY:16
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>That's it! Here's your rank you earned it... Captain."
+        - execute as_server 'pex user <player.name> add Pilot5'
+        - execute as_server 'pex user <player.name> remove Pilot2'
+        - TAKE 57 QTY:16
+        - EXECUTE ASSERVER 'pex group Captain user add <player.name>'
+        - EXECUTE ASSERVER 'pex group Pilot user remove <player.name>'
+'James3':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - PERMISSION Pilot4
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>16 diamond blocks dumbass <player.name>... Where are they?"
+'ComStart':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Captain
+    - PERMISSION Special
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>So you're ready to specialize! I handle the Commander Specialty. Do you want to become a Commander?"
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I want to be a Commander.
+          Script:
+           - CHAT "<&a>Are you sure you don't want to talk to the others first?"
+           - ZAP
+        2:
+          Trigger: /No/ I like being a Captain.
+          Script:
+          - CHAT "<&a>I guess you're not what were looking for.
+    2:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>So are you sure? Yes or No?"
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I'm sure.
+          Script:
+           - CHAT "<&a>Great, But first a task!"
+           - execute as_server 'pex user <player.name> remove Special'
+           - execute as_server 'pex user <player.name> add Commander'
+        2:
+          Trigger: /No/ I want to be something else.
+          Script:
+          - CHAT "<&a>Try talking to the others.
+          - ZAP 1
+'ComTask':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Captain
+    - PERMISSION Commander
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>You're task is simple, Bring me 64 dispensers 64 Iron blocks and 300 wool. And you will be a Commander of the Guild."
+        - execute as_server 'pex user <player.name> remove Commander'
+        - execute as_server 'pex user <player.name> add Com1'
+'ComTaskNo':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Captain
+    - PERMISSION Com1
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Where are my items that I require <player.name>? I need 64 dispensers 64 Iron blocks and 300 wool"
+'ComTaskYes':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Captain
+    - PERMISSION Com1
+    - ITEM DISPENSER QTY:64
+    - ITEM 35 QTY:300
+    - ITEM 42 QTY:64
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>You've done it! Here is your rank Commander!"
+        - TAKE DISPENSER QTY:64
+        - TAKE 35 QTY:300
+        - TAKE 42 QTY:64
+        - EXECUTE ASSERVER 'pex group Commander user add <player.name>'
+        - EXECUTE ASSERVER 'pex group Captain user remove <player.name>'

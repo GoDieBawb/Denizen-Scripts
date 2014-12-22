@@ -1,0 +1,224 @@
+Penis:
+  Type: Assignment
+  Interact Scripts:
+  - 7 ^Unkown
+  - 8 ^Strike
+  - 9 ^During
+  - 10 ^Start
+  - 11 ^OceanStart
+  - 12 ^OceanDuring
+  - 13 ^OceanEnd
+  - 14 ^DesertStart
+  - 15 ^DesertDuring
+  - 16 ^DesertEnd
+  - 17 ^CliffStart
+  - 18 ^CliffDuring
+  - 19 ^CliffEnd
+  - 20 ^AirStart
+  - 21 ^AirDuring
+  - 22 ^AirEnd
+  - 23 ^End
+  - 24 ^Agro
+  - 25 ^After
+'Start':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup friendly
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Hello there! We don't get many strangers this far out! It's a shame you have to visit at such an unfortunate time."
+        - flag thissy
+'OceanStart':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - flagged thissy
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Well we've been getting reports of a coming attack, unfortunately we don't know who."
+        - zap
+    2:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Can you go the lighthouse and see Thomas? He may have some information."
+        - flag ocean
+'OceanDuring':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup friendly
+    - flagged ocean
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Thomas may have information! Go to the lighthouse quickly!"
+'OceanEnd':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup friendly
+    - flagged oceandone
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>So Thomas says there is no threat from the ocean? Good.... We don't have any defence against a sea attack."
+        - flag tranny
+'DesertStart':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup friendly
+    - flagged tranny
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Head West to the Castle. Find Farrus, he's been gathering information on the sand niggers of the Western Jihadi Desert."
+        - flag desert
+'DesertDuring':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup friendly
+    - flagged desert
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Go see Farrus at the castle!"
+'DesertEnd':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup friendly
+    - flagged desertdone
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>They were only looking for water? Well those people are obviously no threat to us..."
+        - flag tranny2
+'CliffStart':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup friendly
+    - flagged tranny2
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>This might be a longshot. Go see Lucian in the mountains to the East. Look for his hot air balloon. He's been keeping an eye on the smugglers."
+        - flag gay
+'CliffDuring':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup friendly
+    - flagged gay
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Go see Lucian he's in the mountains to the East."
+        - flag gay
+'CliffEnd':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup friendly
+    - flagged cliffdone
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>The smugglers are chasing treasure as usual... I know who it is..."
+        - flag tranny3
+'AirStart':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup friendly
+    - flagged tranny3
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>As I suspected.... Go see Peter in the church. He has an airship, tell him to take you up. He'll know what it means."
+        - flag air
+'AirDuring':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup friendly
+    - flagged air
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Quickly! Go see Peter in the church."
+'AirEnd':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup friendly
+    - flagged airgo
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Incredible... I had that installation built in fear of air invasion. I kept it a secret, if the townspeople found out I'd spent money on that without their knowing I'd be hung."
+        - execute as_server 'pex group complete user add <player.name>'
+        - flag thissy:!
+        - flag thissy:!
+        - flag ocean:!
+        - flag ocean1:!
+        - flag oceandone:!
+        - flag desert:!
+        - flag desert1:!
+        - flag desert2:!
+        - flag water:!
+        - flag desertdone:!
+        - flag tranny2:!
+        - flag gay:!
+        - flag cliffdone:!
+        - flag tranny3:!
+        - flag air:!
+        - flag air1:!
+        - flag emergency:!
+        - flag final:!
+        - flag battlestarty:!
+        - flag battle1:!
+        - flag battle2:!
+'End':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup friendly
+    - ingroup complete
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Thank you for everything... Feel free to use the training area outside of town."

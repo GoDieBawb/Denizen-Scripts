@@ -1,0 +1,47 @@
+'GuardTimer':
+  type: world     
+  events:
+    On 5:00 in world:
+      - run as:n@129 script:ArcherGuard delay:1
+      - run as:n@131 Scipt:WallyGuard delay:1
+      - run as:n@126 Scipt:HadrianSleep delay:1
+    On 20:00 in world:
+      - run script:ArcherSleep as:n@129 delay:1
+      - run Scipt:WallySleep as:n@131 delay:1
+      - run Scipt:HadrianGuard as:n@126 delay:1
+'ArcherGuard':
+  type: task
+  script:
+    - animate entities:<npc> animation:stop_sleeping
+    - wait 2
+    - walkto location:<Server.Flag[TowerTop]>
+'WallyGuard':
+  Type: Task
+  Script:
+    - animate entities:<npc> animation:stop_sleeping
+    - walkto location:<Server.Flag[TowerDoor]>
+    - animate animation:sleep
+'HadrianGuard':
+  type: task
+  script:
+    - animate entities:<npc> animation:stop_sleeping
+    - wait 2
+    - walkto location:<Server.Flag[TowerTop]>
+'HadrianSleep':
+  type: task
+  script:
+    - walkto location:<Server.Flag[HadrianBed]>
+    - wait 10
+    - animate entities:<npc> animation:sleep
+'WallySleep':
+  type: task
+  script:
+    - walkto location:<Server.Flag[WallyBed]>
+    - wait 10
+    - animate entities:<npc> animation:sleep
+'ArcherSleep':
+  type: task
+  script:
+    - walkto location:<Server.Flag[ArcherBed]>
+    - wait 10
+    - animate entities:<npc> animation:sleep

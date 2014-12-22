@@ -1,0 +1,258 @@
+Wizarddexx:
+  Type: Assignment
+  Interact Scripts:
+  - 13 ^WizardDex4
+  - 12 ^WizardDex3
+  - 11 ^WizardDex2    
+  - 10 ^WizardDex
+  - 14 ^WizardDex5
+  - 15 ^MageEd
+  - 16 ^EnchStart
+  - 17 ^EnchTask
+  - 18 ^EnchTaskNo
+  - 19 ^EnchTaskYes
+  - 20 ^GuildComp
+  - 14 ^WizardDex6
+'WizardDex':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Magician
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Hey there magician! Looking to rank up in the guild?"
+        - ZAP
+      Proximity Trigger:
+        Script:
+        - CHAT "<&a>Hi there"
+    2:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>So... are you looking for advancement? yes or no?"
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I wanna help out!
+          Script:
+           - CHAT "<&a>Great, So you ready to hear your task?"
+           - ZAP 3
+        2:
+          Trigger: /No/ I like being a wizard
+          Script:
+           - CHAT "<&a>Alright fine... I guess you're not what were looking for."
+           - ZAP 1
+    3:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>So are you ready to hear your task? Yes or No?"
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I want to be a rank up.
+          Script:
+           - CHAT "<&a>Great! What I need from you is 10 gold blocks.... We've been running low on foodstamps with this constant war going!"
+           - execute as_server 'pex user <player.name> add Wizard4'
+           - execute as_server 'pex user <player.name> remove Magician'
+        2:
+          Trigger: /No/ maybe later.
+          Script:
+           - CHAT Alright fine... I guess you're not what were looking for.
+           - ZAP 1
+    4:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Hey <player.name>! How's mageing?"
+'WizardDex4':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - PERMISSION Wizard4
+    - ITEM GOLD_BLOCK qty:10
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Thank you! Congratulations you are now a Wizard in the mage's guild."
+        - execute as_server 'pex user <player.name> add wizard5'
+        - execute as_server 'pex user <player.name> remove wizard4'
+        - TAKE 41 QTY:10
+        - EXECUTE ASSERVER 'pex group Builder user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Craftsman user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Foreman user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Pilot user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Crewman user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Captain user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Magician user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Wizard user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Spellcaster user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Bandit user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Rogue user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Thief user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Priest user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Bishop user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Cardinal user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Guard user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Crusader user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Veteran user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Wizard user add <player.name>'
+        - EXECUTE ASSERVER 'pex group Magician user remove <player.name>'
+'WizardDex3':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - PERMISSION Wizard4
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>10 Gold Blocks <player.name>... Bring that and you're in."
+'WizardDex5':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - permission Spellcaster
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>You must donate to rank up further."
+'WizardDex6':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - permission wizard5
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Talk to Brewer to Rank up."
+'MageEd':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - permission Spellcaster
+    - ingroup donor
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Hello Spellcaster, Are you ready to specialize?"
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I want to be a rank up.
+          Script:
+           - CHAT "<&a>Great! But first I must tell you something!"
+           - ZAP
+        2:
+          Trigger: /No/ I like being a Spellcaster.
+          Script:
+          - CHAT "<&a>I guess you're not what were looking for.
+    2:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>There are three specialties, Enchanter, Brewmaster, and Summoner. Wizard handles Summoners, Brewer Handles Brewmaster, and WizardDexter handles Enchanters."
+        - execute as_server 'pex user <player.name> add Special'
+'EnchStart':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Spellcaster
+    - PERMISSION Special
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>So you're ready to specialize! I handle the Enchanter Specialty. Do you want to become a Enchanter?"
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I want to be a Enchanter.
+          Script:
+           - CHAT "<&a>Are you sure you don't want to talk to the others first?"
+           - ZAP
+        2:
+          Trigger: /No/ I like being a Spellcaster.
+          Script:
+          - CHAT "<&a>I guess you're not what were looking for.
+    2:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>So are you sure? Yes or No?"
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I'm sure.
+          Script:
+           - CHAT "<&a>Great, But first a task!"
+           - execute as_server 'pex user <player.name> remove Special'
+           - execute as_server 'pex user <player.name> add Enchanter'
+        2:
+          Trigger: /No/ I want to be something else.
+          Script:
+          - CHAT "<&a>Try talking to the others.
+          - ZAP 1
+'EnchTask':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Spellcaster
+    - PERMISSION Enchanter
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>You're task is simple, Bring me 100 bottles of enchanting and a set of diamond armor. And you will be a Enchanter of the Guild."
+        - execute as_server 'pex user <player.name> remove Enchanter'
+        - execute as_server 'pex user <player.name> add brew1'
+'EnchTaskNo':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Spellcaster
+    - PERMISSION Brew1
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Where are my items that I require <player.name>?"
+'EnchTaskYes':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Spellcaster
+    - PERMISSION Brew1
+    - ITEM 384 qty:100
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>You've done it! Here is your rank Enchanter!"
+        - EXECUTE ASSERVER 'pex group Builder user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Craftsman user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Foreman user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Pilot user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Crewman user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Captain user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Magician user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Wizard user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Spellcaster user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Bandit user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Rogue user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Thief user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Priest user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Bishop user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Cardinal user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Guard user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Crusader user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Veteran user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Enchanter user add <player.name>'
+        - EXECUTE ASSERVER 'pex group Spellcaster user remove <player.name>'
+        - TAKE 384 QTY:100

@@ -1,0 +1,70 @@
+HorseBandit:
+  Type: Assignment
+  Interact Scripts:
+  - 1 Unknown
+  - 2 Bandit
+  - 3 TrustTest
+  - 4 Trusted
+  - 5 Shame
+'Bandit':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - flagged Egged
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&b><&l>Horses you say? I may have some horses... But how do I know your trustworthy?"
+        - flag TrustTest
+'TrustTest':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - flagged TrustTest
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&b><&l>There's a specific horse in town that I want, but the owner won't sell him."
+        - ZAP
+    2:
+      Click Trigger:
+        Script:
+        - CHAT "<&b><&l>If I can't have that horse, no one can. <&4><&l>I want you to kill that horse."
+        - execute as_server "citizens save"
+        - execute as_server "citizens reload"
+        - execute as_server "npc select 47"
+        - execute as_server "npc vulnerable"
+        - execute as_server "npc health -set 3"
+'Trusted':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - flagged HorseMurder
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&b><&l>Holy Fucking Shit you're nuts. I didn't think you would do it you crazy dick."
+        - CHAT "<&b><&l>I definitely Trust you now.... To tell you the truth I just steal the horses and to be honest I don't know if I can get anymore.."
+        - ZAP
+    2:
+      Click Trigger:
+        Script:
+        - CHAT "<&b><&l>Well I'm out of business... My horse provider skipped out on me... So.. Tough luck."
+        - flag Horseman
+'Shame':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - flagged Horseman
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&b><&l>Shame I'm outta business..."

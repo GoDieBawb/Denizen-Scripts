@@ -1,0 +1,124 @@
+FatherJohn:
+  Type: Assignment
+  Interact Scripts:
+  - 2 VoodooStart
+  - 1 JohnStart
+
+JohnStart:
+  Type: Interact
+  Requirements:
+    Mode: None
+    List:
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - if <player.flag[altarPrayerCount]> == null {
+          - flag altarPrayerCount:0
+          }
+
+        - if <player.group[cardinal]> {
+          - chat "You must donate to rank up further"
+
+          } else if <player.flag[inGuild]> != null {
+          - chat "We're not interested in someone in a guild already."
+
+          } else if <player.flag[priestDuring]> && <player.flag[altarPrayerCount]> > 4 {
+          - chat "Congratulations <player.name> I heard you prayed at <player.flag[altarPrayerCount]> altars!"
+          - flag priestDuring:!
+          - run script:JohnFinish
+
+          } else if <player.flag[priestDuring]> && <player.flag[altarPrayerCount]> != null {
+          - chat "You've prayed at <player.flag[altarPrayerCount]> altars. That's not enough, keep searching!"
+
+          } else if <player.flag[priestAccept]> {
+          - chat "Alright! take a look around other towns. You'll find altars similar to this one. I need you to pray at 5 altars before you can join."
+          - flag priestAccept:!
+          - flag priestDuring
+
+          } else if <player.flag[priestAsk]> {
+          - chat "So what will it be player? Yes or No. Do you want to become a priest?"
+
+          } else {
+          - chat "Hello there! I'm looking for people who want to become priests"
+          - flag priestAsk duration:15s
+          }
+
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I'd love to be a priest.
+          Script:
+           - if <player.flag[inGuild]> == null {
+             - CHAT "<&a>Good!"
+             - flag priestaccept
+             }
+        2:
+          Trigger: /No/ Im not interested.
+          Script:
+           - CHAT "<&a>Alright thats fine..."
+
+JohnFinish:
+  Type: Task
+  Script:
+    - execute as_server "pex group priest user add <player.name>"
+    - narrate "You are now in the priest's guild!"
+    - flag inGuild:priest
+
+VoodooStart:
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - inGroup Donor
+    - inGroup Cardinal
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - if <player.group[Voodoo]> {
+          - chat "Hello Voodoo"
+
+          } else if <player.flag[VoodooDuring]> {
+          - run script:VoodooCheck
+
+          } else if <player.group[Cardinal]> {
+          - chat "Hello Cardinal are you looking to advance in the church?"
+          }
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I'd love to be a Voodoo
+          Script:
+          - if <player.ingroup[Cardinal]> {
+            - chat "Let's see..."
+            - if <player.mcmmo.level[herbalism]> > 149 && <player.mcmmo.level[fishing]> > 99 {
+              - chat "You can be considered for Cardinal"
+              - flag VoodooDuring
+
+              } else {
+              - chat "<&e><&l>Sorry you'll need to train your levels higher."
+              - narrate "<&1><&l>Required Herbalism<&co> <&e><&l>150"
+              - narrate "<&1><&l>Required Fishing<&co> <&e><&l>100"
+              - narrate "<&4><&l>Current Herbalism<&co> <&e><&l><player.mcmmo.level[herbalism]>"
+              - narrate "<&4><&l>Current Fishing<&co> <&e><&l><player.mcmmo.level[fishing]>"
+              }
+            }
+ 
+VoodooCheck:
+  Type: Task
+  Script:
+    - if <player.flag[sacrificeCount]> > 199 && <player.flag[PrayerCount]> > 199 && <player.flag[altarPrayerCount]> > 9 {
+      - define VoodooStats true
+      }
+
+    - if %Voodootats% == true {
+      - execute as_server "pex group Voodoo user add <player.name>"
+      - execute as_server "pex group cardinal user remove <player.name>"
+      - chat "You can be a Voodoo"
+      - flag VoodooDuring:!
+
+      } else {
+      - chat "<&e><&l>I'm sorry but you still need need at least <&1><&l>200 Sacrifice Points <&e><&l>Prayed at <&1><&l>10 Altars <&e><&l>and used <&1><&l>200 Prayers"
+      - narrate "<&4><&l>Current sacrifice points:<&e><&l><player.flag[sacrificeCount]>"
+      - narrate "<&4><&l>Current Prayers:<&e><&l><player.flag[PrayerCount]>"
+      - narrate "<&4><&l>Current Prayers:<&e><&l><player.flag[altarPrayerCount]>"
+      }

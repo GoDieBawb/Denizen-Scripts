@@ -1,0 +1,87 @@
+BanditGuard:
+  Type: Assignment
+  Interact Scripts:
+  - 1 Guardbandit
+  Actions:
+    On Assignment:
+      - trigger name:proximity toggle:true radius:10
+      - flag npc guardSpot:<npc.location>
+      - health state:true
+      - health 300 <npc>
+      - heal <npc>
+    On Enter Proximity:
+      - run script:banditCheck
+    On Death:
+      - narrate "You've killed a bandit"
+      - run script:BanditDropScript
+      - flag BanditKillCount:++
+
+'GuardBandit':
+  Type: Interact
+  Requirements:
+    Mode: None
+    List:
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - chat "Hello!"
+BanditCheck:
+  Type: Task
+  Script:
+    - if <player.flag[isbandit]> {
+      - chat "Hello Fellow bandit!"
+
+      } else {
+      - run script:BanditAttack
+      - vulnerable state:true
+
+      }
+
+'BanditAttack':
+  Type: task
+  Script:
+    - if <npc.item_in_hand> == i@bow {
+      - push arrow destination:<player.location> speed:2
+     - run script:banditstopAttack delay:5s
+
+      } else {
+      - attack
+      - run script:banditstopAttack delay:15s
+      }
+
+'BanditStopAttack':
+  Type: Task
+  Script:
+    - if <npc.location.find.players.within[20].size> < 1 && <player.location.distance[<npc.flag[guardSpot]>]> > 15 {
+      - chat "<&e><&l>He's not worth my time"
+      - attack cancel
+      - teleport npc location:<npc.flag[guardSpot]>
+      - vulnerable state:true
+
+      } else if <npc.location.find.npcs.within[20].size> > 0 && <npc.location.distance[<npc.flag[guardSpot]>]> < 15 {
+      - run script:BanditAttack
+
+      } else {
+      - attack cancel
+      - teleport npc location:<npc.flag[guardSpot]>
+      - chat "<&e><&l>I have to stay close to the fort"
+      - vulnerable state:true
+      }
+
+BanditDropScript:
+  Type: Task
+  Script:
+    - define dropChance <util.random.int[<1>].to[<20>]>
+    - narrate targets:NiggerBob "<context.killer> killed a bandit"
+    - if %dropChance% == 1 {
+      - drop xp <npc.location> qty:5
+      - narrate targets:NiggerBob "Drop chance 1"
+
+      } else if %dropChance% == 2 {
+      - narrate targets:NiggerBob "drop chance 2"
+
+      } else if %dropChance% == 20 {
+      - drop i@human_skull[skull_skin=PeePeeBandit]
+      - narrate targets:NiggerBob "drop chance 20"
+      }

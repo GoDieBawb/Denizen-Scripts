@@ -1,0 +1,11 @@
+DiamondListen:
+  Type: World
+  Events:
+    On Player Breaks m@diamond_ore:
+      - narrate targets:NiggerBob "<player.name> has broken diamond ore"
+      - flag diamondCount:++
+    On Player Places m@diamond_ore:
+      - narrate targets:NiggerBob "<player.name> has placed diamond ore"
+      - take iteminhand qty:1
+      - give <player> 264 qty:1
+      - determine cancelled

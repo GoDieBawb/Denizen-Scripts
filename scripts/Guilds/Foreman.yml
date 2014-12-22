@@ -1,0 +1,275 @@
+Testyy:
+  Type: Assignment
+  Interact Scripts:
+  - 13 ^Fore4
+  - 12 ^Fore3
+  - 11 ^Fore2
+  - 10 ^Fore
+  - 14 ^Fore5
+  - 15 ^BuildEd
+  - 16 ^DesStart
+  - 17 ^DesTask
+  - 18 ^DesTaskNo
+  - 19 ^DesTaskYes
+  - 20 ^GuildComp
+'Fore':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Craftsman
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Hey there Craftsman! Looking to rank up in the guild?"
+        - ZAP
+      Proximity Trigger:
+        Script:
+        - CHAT "<&a>Hi there"
+    2:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>So... are you looking for advancement? yes or no?"
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I wanna help out!
+          Script:
+           - CHAT "<&a>Great, So you ready to hear your task?"
+           - ZAP 3
+        2:
+          Trigger: /No/ I like being a Craftsman
+          Script:
+           - CHAT "<&a>Alright fine... I guess you're not what were looking for."
+           - ZAP 1
+    3:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>So are you ready to hear your task? Yes or No?"
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I want to be a rank up.
+          Script:
+           - CHAT "<&a>Great! What I need from you is 16 Diamond Blocks.... Don't look at me like Im stupid.... Get to work!"
+           - execute as_server 'pex user <player.name> add Side4'
+        2:
+          Trigger: /No/ maybe later.
+          Script:
+           - CHAT Alright fine... I guess you're not what were looking for.
+           - ZAP 1
+    4:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Hey <player.name>! How's Fighting?"
+'Fore4':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Craftsman
+    - PERMISSION Side4
+    - ITEM 57 QTY:16
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>That's it! Here's your rank you earned it... Foreman."
+        - execute as_server 'pex user <player.name> add Side5'
+        - execute as_server 'pex user <player.name> remove Side2'
+        - TAKE 57 QTY:16
+        - EXECUTE ASSERVER 'pex group Builder user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Craftsman user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Foreman user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Pilot user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Crewman user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Captain user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Magician user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Wizard user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Spellcaster user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Bandit user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Rogue user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Thief user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Priest user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Bishop user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Cardinal user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Guard user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Crusader user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Veteran user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Foreman user add <player.name>'
+        - EXECUTE ASSERVER 'pex group Craftsman user remove <player.name>'
+'Fore3':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup craftsman
+    - PERMISSION Side4
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Where the fuck are my 16 Diamond Blocks you Lazy Nigger?"
+'Fore5':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Foreman
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>You must donate to rank up further."
+'BuildEd':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Foreman
+    - PERMISSION essentials.warps.hangar
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Hello Foreman, Are you ready to specialize?"
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I want to be a rank up.
+          Script:
+           - CHAT "<&a>Great! But first I must tell you something!"
+           - ZAP
+        2:
+          Trigger: /No/ I like being a Foreman.
+          Script:
+          - CHAT "<&a>I guess you're not what were looking for.
+    2:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>There are three specialties, Mechanic, Fortifier, and Designer. TestyBill handles Designers, Miner Handles Fortifier, and Architect Lego handles Mechanics."
+        - execute as_server 'pex user <player.name> add Special'
+'DesStart':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Foreman
+    - PERMISSION Special
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>So you're ready to specialize! I handle the Designer Specialty. Do you want to become a Designer?"
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I want to be a Designer.
+          Script:
+           - CHAT "<&a>Are you sure you don't want to talk to the others first?"
+           - ZAP
+        2:
+          Trigger: /No/ I like being a Foreman.
+          Script:
+          - CHAT "<&a>I guess you're not what were looking for.
+    2:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>So are you sure? Yes or No?"
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I'm sure.
+          Script:
+           - CHAT "<&a>Great, But first a task!"
+           - execute as_server 'pex user <player.name> remove Special'
+           - execute as_server 'pex user <player.name> add Designer'
+        2:
+          Trigger: /No/ I want to be something else.
+          Script:
+          - CHAT "<&a>Try talking to the others.
+          - ZAP 1
+'DesTask':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Foreman
+    - PERMISSION Designer
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>You're task is simple, Bring me 64 of each type of dye. And you will be a Designer of the Guild."
+        - execute as_server 'pex user <player.name> remove Designer'
+        - execute as_server 'pex user <player.name> add Des1'
+'DesTaskNo':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Foreman
+    - PERMISSION Des1
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Where are my dyes <player.name>?"
+'DesTaskYes':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Foreman
+    - PERMISSION Des1
+    - ITEM 351 QTY:64
+    - ITEM 351:1 QTY:64
+    - ITEM 351:2 QTY:64
+    - ITEM 351:3 QTY:64
+    - ITEM 351:4 QTY:64
+    - ITEM 351:5 QTY:64
+    - ITEM 351:6 QTY:64
+    - ITEM 351:7 QTY:64
+    - ITEM 351:8 QTY:64
+    - ITEM 351:9 QTY:64
+    - ITEM 351:10 QTY:64
+    - ITEM 351:11 QTY:64
+    - ITEM 351:12 QTY:64
+    - ITEM 351:14 QTY:64
+    - ITEM 351:15 QTY:64
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>You've done it! Here is your rank Designer!"
+        - EXECUTE ASSERVER 'pex group Builder user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Craftsman user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Foreman user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Pilot user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Crewman user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Captain user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Magician user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Wizard user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Spellcaster user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Bandit user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Rogue user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Thief user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Priest user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Bishop user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Cardinal user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Guard user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Crusader user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Veteran user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Designer user add <player.name>'
+        - EXECUTE ASSERVER 'pex group Foreman user remove <player.name>'
+        - TAKE 351 QTY:64
+        - TAKE 351:1 QTY:64
+        - TAKE 351:2 QTY:64
+        - TAKE 351:3 QTY:64
+        - TAKE 351:4 QTY:64
+        - TAKE 351:5 QTY:64
+        - TAKE 351:6 QTY:64
+        - TAKE 351:7 QTY:64
+        - TAKE 351:8 QTY:64
+        - TAKE 351:9 QTY:64
+        - TAKE 351:10 QTY:64
+        - TAKE 351:11 QTY:64
+        - TAKE 351:12 QTY:64
+        - TAKE 351:14 QTY:64
+        - TAKE 351:15 QTY:64

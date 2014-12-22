@@ -1,0 +1,61 @@
+Jockie:
+  Type: Assignment
+  Interact Scripts:
+  - 1 Unknown
+  - 2 NewHorses
+  - 3 NoArmor
+  - 4 Armor
+  - 5 Snitching
+'NewHorses':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - flagged Searching
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&b>Thank Goodness that last shipment of horses has arrived."
+        - ZAP
+    2:
+      Click Trigger:
+        Script:
+        - CHAT "<&b>Where did I get my horses? Bring me five sets of Iron Horse armor and I might tell you."
+        - flag HorseArmor
+'NoArmor':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - flagged HorseArmor
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&b><&l>If you want to know where I get my horses I need those <&4>Five sets of Iron Horse Armor."
+'Armor':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - flagged HorseArmor
+    - item 417 qty:5
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - TAKE 417 qty:5
+        - CHAT "<&b><&l>That's exactly what I needed, the guilds will pay nicely for these horses."
+        - flag Armored
+'Snitching':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - flagged Armored
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&b><&l>I buy these horses from a trader. <&4><&l>He lives in the woods out back."

@@ -1,0 +1,56 @@
+StolenHorse:
+  Type: Assignment
+  Interact Scripts:
+  - 1 Stolen
+'Stolen':
+  Type: Interact
+  Requirements:
+    Mode: None
+    List:
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&e><&l>Neigh Bitch... I got stealed."
+MajesticHorse:
+  Type: Assignment
+  Interact Scripts:
+  - 1 Majesty
+  - 2 Murder
+  Actions:
+    On Death:
+    - runtask HorseDeath
+'Majesty':
+  Type: Interact
+  Requirements:
+    Mode: None
+    List:
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&e><&l>Neigh Bitch... I'm being majestic."
+'Murder':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - flagged TrustTest
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&e><&l>Neigh Bitch... I'm being... murdered?"
+        - execute as_op "npc select 47"
+        - execute as_op "npc vulnerable"
+        - execute as_op "npc health -set 3"
+'HorseDeath':
+  Type: Task
+  Script:
+    - NARRATE "<&b><&l>Well.... You murdered a horse, a majestic creature, I hope you're happy. You suck."
+    - execute as_op "npc vulnerable"
+    - execute as_op "npc horse --type skeleton_horse
+    - wait 30
+    - execute as_op "npc horse --type horse"
+
+    - flag HorseMurder

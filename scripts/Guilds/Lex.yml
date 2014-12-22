@@ -1,0 +1,279 @@
+Lexx:
+  Type: Assignment
+  Interact Scripts:
+  - 13 ^Lex4
+  - 12 ^Lex3
+  - 11 ^Lex2    
+  - 10 ^Lex
+  - 14 ^Lex5
+  - 15 Donate
+  - 15 ^Piloted
+  - 16 ^BombStart
+  - 17 ^BombTask
+  - 18 ^BombTaskNo
+  - 19 ^BombTaskYes
+  - 20 ^GuildComp
+'Lex':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - -ingroup Pilot
+    - -ingroup Griefer
+    - -ingroup Magician
+    - -ingroup Builder
+    - -ingroup Fighter
+    - -ingroup Priest
+    - -ingroup Crusader
+    - -ingroup Veteran
+    - -ingroup Wizard
+    - -ingroup SpellCaster
+    - -ingroup Craftsman
+    - -ingroup Foreman
+    - -ingroup Pilot
+    - -ingroup Captain
+    - -ingroup Rogue
+    - -ingroup Thief
+    - -ingroup Bishop
+    - -ingroup Cardinal
+    - -ingroup Designer
+    - -ingroup Fortifier
+    - -ingroup Mechanic
+    - -ingroup VooDoo
+    - -ingroup Pacifist
+    - -ingroup Patriarch
+    - -ingroup Archer
+    - -ingroup Tank
+    - -ingroup Swordsman
+    - -ingroup Gunner
+    - -ingroup Bomber
+    - -ingroup Commander
+    - -ingroup Summoner
+    - -ingroup Enchanter
+    - -ingroup Brewmaster
+    - -ingroup Explosives
+    - -ingroup Spy
+    - -ingroup Assassin
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Hey there Citizen... You look like someone who likes airships! Am I right?"
+        - ZAP step:2
+      Proximity Trigger:
+        Script:
+        - CHAT "<&a>Hi there"
+    2:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>So... Do you like airships yes or no?"
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I love airships.
+          Script:
+           - CHAT "<&a>Great! I'm looking for airship experts. Pilots if you will..."
+           - ZAP 3
+        2:
+          Trigger: /No/ I hate airships.
+          Script:
+           - CHAT "<&a>Alright fine... I guess you're not what were looking for."
+           - ZAP 1
+    3:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Do you want to become a pilot? Yes or No?"
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I want to be a pilot.
+          Script:
+           - CHAT "<&a>Great! But before I officially let you in I need you to do something for me"
+           - execute as_server 'pex user <player.name> add Pilot'
+        2:
+          Trigger: /No/ maybe later.
+          Script:
+           - CHAT Alright fine... I guess you're not what were looking for.
+           - ZAP 1
+    4:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Hey <player.name>! How's piloting?"
+'Lex2':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - PERMISSION Pilot
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Okay! What I need from you is 3 Stacks of wool. I don't care what color, but we need it quick. Bring me that and your in."
+        - execute as_server 'pex user <player.name> add Pilot2'
+        - execute as_server 'pex user <player.name> remove Pilot'
+'Lex4':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - PERMISSION Pilot2
+    - ITEM 35 QTY:192
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Thank you! Exactly what we needed! You're in! Type /Warp Pilot to get to the guild."
+        - execute as_server 'pex user <player.name> add Pilot3'
+        - permission refuse Pilot2
+        - TAKE 35 QTY:192
+        - EXECUTE ASSERVER 'pex group Builder user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Craftsman user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Foreman user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Pilot user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Crewman user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Captain user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Magician user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Wizard user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Spellcaster user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Bandit user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Rogue user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Thief user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Priest user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Bishop user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Cardinal user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Guard user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Crusader user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Veteran user remove <player.name>'
+        - EXECUTE ASSERVER 'pex group Crewman user add <player.name>'
+'Lex3':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - PERMISSION Pilot2
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Three stacks of wool <player.name>... Bring that and you're in."
+'Lex5':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - PERMISSION Pilot3
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Hope you enjoy the guild!"
+'PilotEd':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Captain
+    - ingroup donor
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Hello Captain, Are you ready to specialize?"
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I want to be a rank up.
+          Script:
+           - CHAT "<&a>Great! But first I must tell you something!"
+           - ZAP
+        2:
+          Trigger: /No/ I like being a Captain.
+          Script:
+          - CHAT "<&a>I guess you're not what were looking for.
+    2:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>There are three specialties, Gunner, Commander, and Bomber. Lex handles Bombers, James Handles Commander, and Pirate Perry handles Gunners."
+        - execute as_server 'pex user <player.name> add Special'
+'BombStart':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Captain
+    - PERMISSION Special
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>So you're ready to specialize! I handle the Bomber Specialty. Do you want to become a Bomber?"
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I want to be a Bomber.
+          Script:
+           - CHAT "<&a>Are you sure you don't want to talk to the others first?"
+           - ZAP
+        2:
+          Trigger: /No/ I like being a Captain.
+          Script:
+          - CHAT "<&a>I guess you're not what were looking for.
+    2:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>So are you sure? Yes or No?"
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I'm sure.
+          Script:
+           - CHAT "<&a>Great, But first a task!"
+           - execute as_server 'pex user <player.name> remove Special'
+           - execute as_server 'pex user <player.name> add Bomber'
+        2:
+          Trigger: /No/ I want to be something else.
+          Script:
+          - CHAT "<&a>Try talking to the others.
+          - ZAP 1
+'BombTask':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Captain
+    - PERMISSION Bomber
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>You're task is simple, Bring me 10 DiamodBlocks 64 slimeballs and 10 Lava Buckets. And you will be a Bomber of the Guild."
+        - execute as_server 'pex user <player.name> remove Bomber'
+        - execute as_server 'pex user <player.name> add Bomb1'
+'BombTaskNo':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Captain
+    - PERMISSION Bomb1
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&a>Where are my items that I require <player.name>?"
+'BombTaskYes':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - ingroup Captain
+    - PERMISSION Bomb1
+    - ITEM 341 QTY:64
+    - ITEM 57 QTY:10
+    - ITEM 327 QTY:10
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - TAKE 341 QTY:64
+        - TAKE 57 QTY:10
+        - TAKE 327 QTY:10
+        - CHAT "<&a>You've done it! Here is your rank Bomber!"
+        - EXECUTE ASSERVER 'pex group Bomber user add <player.name>'
+        - EXECUTE ASSERVER 'pex group Captain user remove <player.name>'

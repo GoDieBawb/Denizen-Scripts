@@ -1,0 +1,141 @@
+Miner:
+  Type: Assignment
+  Interact Scripts:
+  - 1 MinerStart
+  - 2 MechanicQuest
+
+MinerStart:
+  Type: Interact
+  Requirements:
+    Mode: None
+    List:
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - if <player.flag[blockCount]> == null {
+          - flag blockCount:0
+          }
+
+        - if <player.group[Foreman]> {
+          - chat "You must be a donor to rank up further."
+
+          } else if <player.flag[inGuild]> != null {
+          - chat "We're not interested in someone in a guild already."
+
+          } else if <player.flag[BuilderDuring]> && <player.flag[BlockCount]> > 999 {
+          - chat "Congratulations <player.name> you've placed <player.flag[blockCount]> Blocks!"
+          - flag BuilderDuring:!
+          - run script:MinerFinish
+
+          } else if <player.flag[blockCount]> != null && <player.flag[builderDuring]> {
+          - chat "You've only built <player.flag[blockCount]> blocks. That's not enough, keep on going!"
+
+
+          } else if <player.flag[BuilderAccept]> {
+          - chat "Okay, if you're a true Builder, you'd have no problem building. Once you've built 1000 blocks, I'll call you a Builder."
+          - flag BuilderAccept:!
+          - flag BuilderDuring
+
+          } else if <player.flag[BuilderAsk]> {
+          - chat "So what will it be player? Yes or No"
+
+          } else {
+          - chat "Hello there! I'm looking for people who want to become Builders"
+          - flag BuilderAsk duration:15s
+          }
+
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I'd love to be a Builder.
+          Script:
+           - CHAT "<&a>Good!"
+           - flag Builderaccept
+        2:
+          Trigger: /No/ Im not interested.
+          Script:
+           - CHAT "<&a>Alright thats fine..."
+
+MinerFinish:
+  Type: Task
+  Script:
+    - execute as_server "pex group builder user add <player.name>"
+    - flag inGuild:builder
+
+MechanicQuest:
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - inGroup Foreman
+    - inGroup Donor
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - if <player.group[Fortifier]> OR <player.group[Designer]> OR <player.group[Mechanic]> {
+          - chat "Congratulations Guild Master"
+
+          } else if <player.flag[MechanicDuring]> {
+          - run script:MechanicCheck
+
+          } else {
+          - chat "Hello <player.name> are you ready to rank up further in the Builders Guild?"
+          }
+
+      Chat Trigger:
+        1:
+          Trigger: /Yes/ I'd love to be a Mechanic.
+          Script:
+            - if <player.flag[inGuild]> == Builder && <player.group[Foreman]> {
+              - CHAT "<&a>Good!"
+
+              - if <player.mcmmo.level[Mining]> > 499 && <player.mcmmo.level[Excavation]> > 349 {
+                - flag MechanicDuring
+
+                } else {
+                - chat "<&e><&l>Sorry you'll need to train your levels higher."
+                - narrate "<&1><&l>Required Mining<&co> <&e><&l>500"
+                - narrate "<&1><&l>Required Excavation<&co> <&e><&l>350"
+                - narrate "<&4><&l>Current Mining<&co> <&e><&l><player.mcmmo.level[Mining]>"
+                - narrate "<&4><&l>Current Excavation<&co> <&e><&l><player.mcmmo.level[Excavation]>"
+                }
+
+              } else {
+              - chat "yes what?"
+              }
+
+MechanicCheck:
+  Type: Task
+  Script:
+    - if <player.flag[BlockCount]> == null {
+      - flag BlockCount:0
+      }
+
+    - if <player.flag[ObsidianCount]> == null {
+      - flag ObsidianCount:0
+      }
+
+    - if <player.flag[BedrockCount]> == null {
+      - flag BedrockCount:0
+      }
+
+    - if <player.flag[redstoneCount]> == null {
+      - flag redstoneCount:0
+      }
+
+    - if <player.flag[BlockCount]> > 19999 && <player.flag[ObsidianCount]> > 1499 && <player.flag[redstoneCount]> > 499 {
+      - define MechanicStats true
+      }
+
+    - if %MechanicStats% == true {
+      - chat "You can be a Mechanic"
+      - flag MechanicDuring:!
+      - execute as_server "pex group Mechanic user add <player.name>"
+
+      } else {
+      - chat "<&e><&l>I'm sorry but you still need need at least <&1><&l>20,000 blocks <&e><&l> placed <&1><&l>1500 Obsidian <&e><&l>and placed <&1><&l>500 redstone"
+      - narrate "<&4><&l>Current Block Count:<&e><&l><player.flag[BlockCount]>"
+      - narrate "<&4><&l>Current Obsidian Count:<&e><&l><player.flag[ObsidianCount]>"
+      - narrate "<&4><&l>Current Bedrock Count:<&e><&l><player.flag[redstoneCount]>"
+      }

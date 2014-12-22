@@ -1,0 +1,52 @@
+Wrangler:
+  Type: Assignment
+  Interact Scripts:
+  - 1 Unknown
+  - 2 Wrangled
+  - 4 HorseEggs
+  - 5 Egged
+'Wrangled':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - flagged Armored
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&b><&l>I'm the guy who's been selling horses... Where do I get them? Maybe if you help me out I could tell you."
+        - ZAP
+    2:
+      Click Trigger:
+        Script:
+        - CHAT "<&b><&l>What I need from you is <&4><&l>Six Horse Eggs... <&b><&l>I've been wanting to start my own business."
+        - flag HorseEgg
+'HorseEggs':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - flagged HorseEgg
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - if <player.inventory.qty[383:100]> > 5 {
+          - CHAT "<&b><&l>Thank you <player.name>. I've been getting these horses <&4><&l>From the smugglers at subsville."
+          - TAKE 383:100 qty:6
+          - flag HorseEgg:!
+          - flag Egged
+          } else {
+          - CHAT "<&b><&l>Where are my <&4><&l>Six Horse Eggs? <&b><&l>When I get those, you get your information."
+'Egged':
+  Type: Interact
+  Requirements:
+    Mode: All
+    List:
+    - flagged Egged
+  Steps:
+    1:
+      Click Trigger:
+        Script:
+        - CHAT "<&b><&l>Go see the <&4><&l>the smugglers at subsville. <&b><&l>But You didn't hear it from me."
